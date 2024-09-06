@@ -163,8 +163,7 @@ if __name__ == "__main__":
     obs_shape = (3, 84, 84)
     pre_aug_obs_shape = (3, 100, 100)
     num_experts = 8
-    # pcd_shape = (3, 5760, 3)
-    pcd_shape = (5200, 3)
+    pcd_shape = (1000, 3)
     replay_buffer_size = 100000
     goal_shape = 4
     episode, episode_reward = 0, 0
