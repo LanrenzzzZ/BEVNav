@@ -1,0 +1,186 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<!-- Include all common properties -->
+  <xacro:include filename="$(find lebai_resources)/urdf/common_colours.xacro"/>
+  <xacro:include filename="$(find lebai_resources)/urdf/common_constants.xacro"/>
+  <xacro:include filename="$(find lebai_resources)/urdf/common_materials.xacro"/>
+<!-- Robot DH parameters define joint-->
+<!-- <xacro:property name="d1" value="0.21583" />
+<xacro:property name="d4" value="0.12063" />
+<xacro:property name="d5" value="0.09833" />
+<xacro:property name="d6" value="0.08343" />
+<xacro:property name="a2" value="-0.28" />
+<xacro:property name="a3" value="-0.26"/> -->
+<!-- Robot visual and  collision dir-->
+<xacro:property name="gripper_visual_base" value="package://lebai_lm3_support/meshes/gripper/visual/gripper_base.stl" />
+<xacro:property name="gripper_visual_link1" value="package://lebai_lm3_support/meshes/gripper/visual/gripper_link1.stl" />
+<xacro:property name="gripper_visual_link2" value="package://lebai_lm3_support/meshes/gripper/visual/gripper_link2.stl" />
+<xacro:property name="gripper_visual_link_finger" value="package://lebai_lm3_support/meshes/gripper/visual/gripper_link_finger.stl" />
+
+<xacro:property name="gripper_collision_base" value="package://lebai_lm3_support/meshes/gripper/collision/gripper_base.stl" />
+<xacro:property name="gripper_collision_link1" value="package://lebai_lm3_support/meshes/gripper/collision/gripper_link1.stl" />
+<xacro:property name="gripper_collision_link2" value="package://lebai_lm3_support/meshes/gripper/collision/gripper_link2.stl" />
+<xacro:property name="gripper_collision_link_finger" value="package://lebai_lm3_support/meshes/gripper/collision/gripper_link_finger.stl" />
+
+
+<xacro:macro name="lebai_gripper" params="prefix">
+
+
+<!-- link list -->
+<link name="${prefix}gripper_base_link">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_base}"/>
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_base}" />
+		</geometry>
+	</collision>
+</link>
+<link name="${prefix}gripper_r_link1">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_link1}" />
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_link1}" />
+		</geometry>
+	</collision>
+</link>
+<link name="${prefix}gripper_r_link2">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_link2}" />
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_link2}" />
+		</geometry>
+	</collision>
+</link>
+<link name="${prefix}gripper_r_link_finger">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_link_finger}" />
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_link_finger}" />
+		</geometry>
+	</collision>
+</link>
+
+
+<link name="${prefix}gripper_l_link1">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_link1}" />
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_link1}" />
+		</geometry>
+	</collision>
+</link>
+
+<link name="${prefix}gripper_l_link2">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_link2}" />
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_link2}" />
+		</geometry>
+	</collision>
+</link>
+
+
+<link name="${prefix}gripper_l_link_finger">
+	<visual>
+		<geometry>
+			<mesh filename="${gripper_visual_link_finger}" />
+		</geometry>
+    	<xacro:material_white name="white"/>
+	</visual>
+	<collision>
+		<geometry>
+			<mesh filename="${gripper_collision_link_finger}" />
+		</geometry>
+	</collision>
+</link>
+
+<link name="${prefix}gripper_tip" />
+
+
+
+<!-- end of link list -->
+
+
+<!-- joint list -->
+<joint name="${prefix}gripper_r_joint1" type="fixed">
+	<parent link="${prefix}gripper_base_link"/>
+	<child link="${prefix}gripper_r_link1"/>
+	<origin xyz="0.025 0.0 0.0856" rpy="${PI_2} 0.0 ${PI}"/>
+	<axis xyz="0 0 1" />
+	<limit lower="-10.0" upper="10.0" effort="100" velocity="1" />
+</joint>
+<joint name="${prefix}gripper_r_joint2" type="fixed">
+	<parent link="${prefix}gripper_base_link"/>
+	<child link="${prefix}gripper_r_link2"/>
+        <origin xyz="0.0115 0.0 0.1056" rpy="${PI_2} 0 0"/>
+	<axis xyz="0 0 1" />
+	<limit lower="-10.0" upper="10.0" effort="100" velocity="1" />
+</joint>
+<joint name="${prefix}gripper_r_joint_finger" type="fixed">
+	<parent link="${prefix}gripper_r_link2"/>
+	<child link="${prefix}gripper_r_link_finger"/>
+        <origin xyz="0.0 0.053 0.0" rpy="${PI} 0 ${PI}"/>
+	<axis xyz="0 0 1" />
+	<limit lower="-10" upper="10" effort="100" velocity="1" />
+</joint>
+<joint name="${prefix}gripper_l_joint1" type="fixed">
+	<parent link="${prefix}gripper_base_link"/>
+	<child link="${prefix}gripper_l_link1"/>
+	<origin xyz="-0.025 0.0 0.0856" rpy="${PI_2} 0.0 0.0"/>
+	<axis xyz="0 0 1" />
+	<limit lower="-10.0" upper="10.0" effort="100" velocity="1" />
+</joint>
+<joint name="${prefix}gripper_l_joint2" type="fixed">
+	<parent link="${prefix}gripper_base_link"/>
+	<child link="${prefix}gripper_l_link2"/>
+        <origin xyz="-0.0115 0.0 0.1056" rpy="${PI_2} 0 ${PI}"/>
+	<axis xyz="0 0 1" />
+	<limit lower="-10.0" upper="10.0" effort="100" velocity="1" />
+</joint>
+
+<joint name="${prefix}gripper_l_joint_finger" type="fixed">
+	<parent link="${prefix}gripper_l_link2"/>
+	<child link="${prefix}gripper_l_link_finger"/>
+        <origin xyz="0.0 0.053 0.0" rpy="${PI} 0 ${PI}"/>
+	<axis xyz="0 0 1" />
+	<limit lower="-10" upper="10" effort="100" velocity="1" />
+</joint>
+
+<joint name="${prefix}gripper_joint_tip" type="fixed">
+      <parent link="${prefix}gripper_l_link_finger"/>
+      <child link="${prefix}gripper_tip"/>
+      <origin xyz="0.0115 0.0 0.0" rpy="0.0 0.0 0.0"/>
+</joint>
+
+</xacro:macro>
+</robot>

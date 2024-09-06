@@ -1,0 +1,34 @@
+
+<launch>
+  <!--建图算法-->
+  <arg name="mapping_mode"  default="liosam" doc="opt:liosam,legoloam,cartographer"/>
+
+  <!-- 开启机器人底层相关节点  -->
+  <include file="$(find turn_on_wheeltec_robot)/launch/turn_on_wheeltec_robot.launch">
+    <arg name="is_cartographer" value="true"/>
+  </include>
+
+  <!-- turn on lidar开启雷达  -->
+  <include file="$(find turn_on_wheeltec_robot)/launch/wheeltec_lidar.launch" />
+  
+  <!-- 开启lio-sam建图算法  -->
+  <group if="$(eval mapping_mode == 'liosam')">
+    <!--robosense_to_velodyne-->
+    <!--<node name="rs_to_velodyne" pkg="rs_to_velodyne" type="rs_to_velodyne" args="XYZIRT XYZIRT" output="screen"/>-->
+    <include file="$(find lio_sam)/launch/run.launch" />
+  </group>
+
+  <!-- 开启lego-loam建图算法  -->
+  <group if="$(eval mapping_mode == 'legoloam')">
+    <!--robosense_to_velodyne-->
+    <!-- <node name="rs_to_velodyne" pkg="rs_to_velodyne" type="rs_to_velodyne" args="XYZIRT XYZIR" output="screen"/> -->
+    <include file="$(find lego_loam)/launch/run.launch" />
+  </group>
+
+  <!-- 开启cartographer建图算法  -->
+  <group if="$(eval mapping_mode == 'cartographer')">
+    <!--robosense_to_velodyne-->
+     <include file="$(find cartographer_ros)/launch/3d_online.launch" />
+  </group>
+
+</launch>

@@ -1,0 +1,21 @@
+<launch>
+  <!--打开节点wheeltec_robot_node，初始化串口等操作-->
+  <node pkg="turn_on_wheeltec_robot" type="wheeltec_robot_node" name="wheeltec_robot" output="screen" respawn="false">
+    <param name="usart_port_name"    type="string" value="/dev/wheeltec_controller"/>  
+    <param name="serial_baud_rate"   type="int"    value="115200"/>
+    <param name="odom_frame_id"      type="string" value="odom_combined"/> 
+    <param name="robot_frame_id"     type="string" value="base_footprint"/> 
+    <param name="gyro_frame_id"      type="string" value="gyro_link"/> 
+    <remap from="odom" to="vehicle/odom"/>
+    <remap from="imu" to="imu_raw"/>
+  </node>
+
+  <!-- turn on lidar开启雷达-->
+  <include file="$(find lslidar_cx_driver)/launch/autoware_start_c16.launch" />
+  <include file="$(find fdilink_ahrs)/launch/ahrs_data.launch" />
+
+  <!-- transform /twist_cmd to /cmd_vel  -->
+  <node pkg="turn_on_wheeltec_robot" type="twist_transform" name="twist_transform" output="screen"/>
+
+</launch>
+

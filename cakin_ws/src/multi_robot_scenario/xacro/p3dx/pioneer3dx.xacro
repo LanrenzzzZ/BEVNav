@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="pioneer3dx" >
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find multi_robot_scenario)/xacro/materials.xacro" />
+
+  <!-- Import robot -->
+  <xacro:include filename="$(find multi_robot_scenario)/xacro/p3dx/pioneer3dx_body.xacro"/>
+  <xacro:pioneer3dx_body name="chassis" parent="base_link" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/p3dx"/>
+
+  <!-- Laser -->
+  <xacro:include filename="$(find multi_robot_scenario)/xacro/laser/hokuyo.xacro"/>
+  <xacro:laser name="front_laser" parent="chassis" xyz="0.125 0 0.25" rpy="0 0 0" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser"/>
+
+
+  <!-- GPU Laser
+  <xacro:include filename="$(find multi_robot_scenario)/xacro/laser/hokuyo_gpu.xacro"/>
+  <xacro:laser_gpu name="front_laser" parent="chassis" xyz="0.16 0 0.1" rpy="0 0 0" meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+  <xacro:include filename="$(find multi_robot_scenario)/xacro/camera/_d435.urdf.xacro"/>
+  <xacro:sensor_d435 name="realsense" parent="chassis" xyz="0.025 0 0.5" />
+    -->
+
+  ########################################
+  # Realsense code
+  ########################################
+
+
+
+  <!--<xacro:include filename="$(find multi_robot_scenario)/xacro/camera/_d435.urdf.xacro"/>
+  <xacro:sensor_d435 parent="chassis"/>
+  <sensor_d parent="chassis">
+    <origin xyz="0.025 0 0.4" rpy="0 0 0"/>
+  </sensor_d>
+  <link name="sensor_d"/>
+  <joint name="wrist_3_camera" type="fixed">
+    <parent link="chassis"/>
+    <child link="sensor_d"/>
+    <origin xyz="0.025 0 0.5" rpy="0 0 0"/>
+
+	  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+  <xacro:realsense_d435 sensor_name="d435_1" parent_link="base_link" rate="10">
+    <origin rpy="0 0 0.785 " xyz="0.035 0.12 0.35"/>
+  </xacro:realsense_d435>
+
+  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+  <xacro:realsense_d435 sensor_name="d435_2" parent_link="base_link" rate="10">
+    <origin rpy="0 0 -0.785 " xyz="0.035 -0.12 0.35"/>
+  </xacro:realsense_d435>
+  </joint-->
+
+  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+  <xacro:realsense_d435 sensor_name="d435" parent_link="base_link" rate="10">
+    <origin rpy="0 0 0 " xyz="0 0 0.35"/>
+  </xacro:realsense_d435>
+
+
+  <!-- Velodyne -->
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="360" gpu="false" min_angle="-1.57" max_angle="1.57" min_range="0.1">
+    <origin xyz="0 0 0.25" rpy="0 0 0" />
+  </xacro:VLP-16>
+
+
+</robot>

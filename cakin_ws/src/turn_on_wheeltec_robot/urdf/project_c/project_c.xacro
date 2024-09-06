@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lebai_lm3">  
+  <!-- <xacro:include filename="$(find turn_on_wheeltec_robot)/urdf/project_c/lm3_macro.xacro"/>
+  <xacro:include filename="$(find turn_on_wheeltec_robot)/urdf/project_c/gripper_macro.xacro"/>
+  <xacro:lebai_lm3 prefix=""/>
+  <xacro:lebai_gripper prefix=""/> -->
+<!--link-->
+  <link name="base_link">
+      <visual>
+        <origin xyz="0 0 0.14" rpy="0 0 0" />
+        <geometry>
+          <box size="0.71 0.56 0.25"/>
+        </geometry>
+    	 <material name="white">
+                <color rgba="1 1 1 1"/>
+        </material>
+      </visual>
+  </link> 
+  <link name="left_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.1" length = "0.06"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="right_wheel_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.1" length = "0.06"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="left_front_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.04" length = "0.04"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="right_front_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.04" length = "0.04"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="left_back_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.04" length = "0.04"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+    <link name="right_back_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.04" length = "0.04"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+    </link>
+<!--joint-->
+    <!-- <joint name="fixed_robot" type="fixed">
+      <origin xyz="0.23 0 0.265" rpy="0 0 3.14"/>
+      <parent link="base_link"/>
+      <child link="base_arm"/>
+    </joint> -->
+    <!-- <joint name="fixed_gripper" type="fixed">
+      <parent link="tool0"/>
+      <child link="gripper_base_link"/>
+    </joint>	 --> -->
+    <joint name="left_wheel_joint" type="fixed">
+        <origin xyz="0 0.214 0.1" rpy="1.57 0 0"/>
+        <parent link="base_link"/>
+        <child link="left_wheel_link"/>
+    </joint>
+    <joint name="right_wheel_joint" type="fixed">
+        <origin xyz="0 -0.214 0.1" rpy="1.57 0 0"/>
+        <parent link="base_link"/>
+        <child link="right_wheel_link"/>
+    </joint>
+    <joint name="left_front_joint" type="fixed">
+        <origin xyz="0.2 0.2 0.04" rpy="1.57 0 0"/>
+        <parent link="base_link"/>
+        <child link="left_front_link"/>
+    </joint>
+    <joint name="right_front_joint" type="fixed">
+        <origin xyz="0.2 -0.2 0.04" rpy="1.57 0 0"/>
+        <parent link="base_link"/>
+        <child link="right_front_link"/>
+    </joint>
+    <joint name="left_back_joint" type="fixed">
+        <origin xyz="-0.2 0.2 0.04" rpy="1.57 0 0"/>
+        <parent link="base_link"/>
+        <child link="left_back_link"/>
+    </joint>
+    <joint name="right_back_joint" type="fixed">
+        <origin xyz="-0.2 -0.2 0.04" rpy="1.57 0 0"/>
+        <parent link="base_link"/>
+        <child link="right_back_link"/>
+    </joint>
+</robot>
+
+
