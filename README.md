@@ -34,7 +34,7 @@ $ export ROS_MASTER_URI=http://localhost:11311
 $ export ROS_PORT_SIM=11311
 $ export GAZEBO_RESOURCE_PATH=~/DMCL/catkin_ws/src/multi_robot_scenario/launch
 $ source ~/.bashrc
-$ cd ~/DMCL/catkin_ws
+$ cd ~/BEVNav/catkin_ws
 $ source devel/setup.bash
 $ source install/setup.bash --extend
 $ cd ~/BEVNav/SAC
